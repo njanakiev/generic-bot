@@ -8,6 +8,19 @@ var exec = require('child_process').exec;
 folder = require('path').dirname(require.main.filename);
 blender = false;
 
+// Check for the operating system
+if(process.platform === 'win32') {
+	console.log('Runnning on Windows machine')
+} else if(process.platform === 'linux') {
+	console.log('Running on Linux machine');
+	// Runs Blender in software GL mode, from
+	// https://www.blender.org/forum/viewtopic.php?t=16526
+	process.env.LIBGL_ALWAYS_SOFTWARE = 1;
+} else {
+	console.log('OS not supported: ' + process.platform);
+	process.exit();
+}
+
 upload();
 setInterval(upload, 10000);
 
